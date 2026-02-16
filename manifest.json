@@ -1,25 +1,23 @@
 {
-  "background_color": "#000000",
+  "background_color": "#0a0f1e",
   "dir": "ltr",
   "display": "standalone",
   "name": "RS App Store",
   "orientation": "any",
   "scope": "/",
-  "short_name": "rs-appstore.blogspot",
+  "short_name": "RS Store",
   "start_url": "/",
   "theme_color": "#121928",
   "icons": [
     {
-      "src": "https://rs-appstore.blogspot.com/favicon.ico",
-      "type": "image/x-icon",
-      "isSquare": false,
-      "isPng": false,
-      "isWebp": false,
-      "isJpg": false,
-      "width": 0,
-      "is512x512": false,
-      "is256x256": false,
-      "is192x192": false
+      "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiPyvduDexR_qmju9h5pJbbQ6Usy5TB_SNyUn3Ar4yNbFhI9143R5L6biReOqSkv2EM1Zh30QIUJ3u-57i6Tnv1HVeTddSOA5bbGvpg6eNsEmJ0PnlJzHvgFDrSnLlET635IdIs8gAWbu5sLumLpLz0gP614OKhUEv-_bxMyg8BZnB1w7IeNzTGNOigzAeJ/s192/16518.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiPyvduDexR_qmju9h5pJbbQ6Usy5TB_SNyUn3Ar4yNbFhI9143R5L6biReOqSkv2EM1Zh30QIUJ3u-57i6Tnv1HVeTddSOA5bbGvpg6eNsEmJ0PnlJzHvgFDrSnLlET635IdIs8gAWbu5sLumLpLz0gP614OKhUEv-_bxMyg8BZnB1w7IeNzTGNOigzAeJ/s512/16518.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
     }
   ]
 }
