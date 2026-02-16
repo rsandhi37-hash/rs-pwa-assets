@@ -1,0 +1,25 @@
+{
+  "background_color": "#000000",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "RS App Store",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "rs-appstore.blogspot",
+  "start_url": "/",
+  "theme_color": "#121928",
+  "icons": [
+    {
+      "src": "https://rs-appstore.blogspot.com/favicon.ico",
+      "type": "image/x-icon",
+      "isSquare": false,
+      "isPng": false,
+      "isWebp": false,
+      "isJpg": false,
+      "width": 0,
+      "is512x512": false,
+      "is256x256": false,
+      "is192x192": false
+    }
+  ]
+}
