@@ -6,7 +6,7 @@
   "orientation": "any",
   "scope": "/",
   "short_name": "RS Store",
-  "start_url": "/",
+  "start_url": "https://rs-appstore.blogspot.com/",
   "theme_color": "#121928",
   "icons": [
     {
