@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RS Voice Call - Secure P2P Calling</title>
+    
+    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+
+    <style>
+        /* --- CSS STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .app-container {
+            background-color: #1e293b;
+            padding: 30px;
+            border-radius: 15px;
+            width: 350px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        .header h2 { color: #38bdf8; margin-bottom: 5px; }
+        .header p { font-size: 12px; color: #94a3b8; margin-bottom: 20px; }
+
+        .status-box {
+            background-color: #0f172a;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        #my-id {
+            color: #10b981;
+            font-size: 18px;
+            margin: 10px 0;
+            word-break: break-all;
+        }
+
+        .dialer-box input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            background-color: #0f172a;
+            color: white;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn {
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            color: white;
+        }
+
+        .small-btn { background-color: #334155; padding: 5px 10px; font-size: 12px; }
+        .small-btn:hover { background-color: #475569; }
+
+        .call-btn { background-color: #10b981; flex: 1; }
+        .call-btn:hover { background-color: #059669; }
+
+        .end-btn { background-color: #ef4444; flex: 1; opacity: 0.5; }
+        .end-btn:not([disabled]):hover { background-color: #dc2626; opacity: 1; }
+
+        .status-text {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <div class="header">
+            <h2>RS Voice Call</h2>
+            <p>End-to-End Encrypted</p>
+        </div>
+
+        <div class="status-box">
+            <p>Your Caller ID:</p>
+            <h3 id="my-id">Generating...</h3>
+            <button id="copy-btn" class="btn small-btn">Copy ID</button>
+        </div>
+
+        <div class="dialer-box">
+            <p>Enter Friend's ID to Call:</p>
+            <input type="text" id="friend-id" placeholder="Paste ID here...">
+            
+            <div class="action-buttons">
+                <button id="call-btn" class="btn call-btn">📞 Call</button>
+                <button id="end-btn" class="btn end-btn" disabled>⛔ End Call</button>
+            </div>
+        </div>
+
+        <p id="call-status" class="status-text">Waiting for connection...</p>
+        
+        <audio id="remote-audio" autoplay></audio>
+    </div>
+
+    <script>
+        // --- JAVASCRIPT LOGIC ---
+        const peer = new Peer();
+        let localStream;
+        let currentCall;
+
+        const myIdElement = document.getElementById('my-id');
+        const friendIdInput = document.getElementById('friend-id');
+        const callStatus = document.getElementById('call-status');
+        const remoteAudio = document.getElementById('remote-audio');
+        const callBtn = document.getElementById('call-btn');
+        const endBtn = document.getElementById('end-btn');
+
+        // Jab humari ID generate ho jaye
+        peer.on('open', (id) => {
+            myIdElement.innerText = id;
+        });
+
+        // Copy ID feature
+        document.getElementById('copy-btn').addEventListener('click', () => {
+            navigator.clipboard.writeText(myIdElement.innerText);
+            alert("Caller ID Copied!");
+        });
+
+        // Microphone permission lena
+        navigator.mediaDevices.getUserMedia({ video: false, audio: true })
+            .then((stream) => {
+                localStream = stream;
+                callStatus.innerText = "Microphone ready. Ready to call!";
+            })
+            .catch((err) => {
+                console.error("Failed to get local stream", err);
+                callStatus.innerText = "Error: Please allow microphone access!";
+            });
+
+        // ----------------- INCOMING CALL LOGIC -----------------
+        peer.on('call', (call) => {
+            // Call uthao aur apni aawaz bhejo
+            call.answer(localStream);
+            currentCall = call;
+            
+            callStatus.innerText = "Incoming Call Connected! 🟢";
+            callBtn.disabled = true;
+            endBtn.disabled = false;
+
+            // Dost ki aawaz sunne ke liye
+            call.on('stream', (remoteStream) => {
+                remoteAudio.srcObject = remoteStream;
+            });
+
+            call.on('close', () => {
+                endCallUI();
+            });
+        });
+
+        // ----------------- OUTGOING CALL LOGIC -----------------
+        callBtn.addEventListener('click', () => {
+            const friendId = friendIdInput.value;
+            if (!friendId) return alert("Please enter your friend's ID!");
+
+            callStatus.innerText = "Calling... ⏳";
+            
+            // Dost ko call milao
+            currentCall = peer.call(friendId, localStream);
+            
+            currentCall.on('stream', (remoteStream) => {
+                remoteAudio.srcObject = remoteStream;
+                callStatus.innerText = "Call Connected! 🟢";
+                callBtn.disabled = true;
+                endBtn.disabled = false;
+            });
+
+            currentCall.on('close', () => {
+                endCallUI();
+            });
+        });
+
+        // ----------------- END CALL LOGIC -----------------
+        endBtn.addEventListener('click', () => {
+            if (currentCall) {
+                currentCall.close();
+            }
+            endCallUI();
+        });
+
+        function endCallUI() {
+            callStatus.innerText = "Call Ended. Ready to call again.";
+            remoteAudio.srcObject = null;
+            callBtn.disabled = false;
+            endBtn.disabled = true;
+        }
+    </script>
+</body>
+</html>
