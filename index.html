@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=yes">
+  <meta name="description" content="પિયા ટી સ્ટોલ - મોરબીની સૌથી પ્રીમિયમ ચા | આરિફ સંધી | લાતી પ્લોટ, ભવાની બેકરી પાછળ">
+  <title>પિયા ટી સ્ટોલ | મોરબીની પ્રીમિયમ ચા - આરિફ ભાઈ સંધી</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js">
+  </script>
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --gold: #d4a745;
+      --gold-light: #f0d78c;
+      --dark: #1a1410;
+      --cream: #fdf8f0;
+      --brown: #3e2c1c;
+    }
+
+    * {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Noto Sans Gujarati', 'Poppins', sans-serif;
+      background: var(--cream);
+      overflow-x: hidden;
+      margin: 0;
+      cursor: default;
+    }
+
+    .font-display {
+      font-family: 'Playfair Display', 'Noto Sans Gujarati', serif;
+    }
+
+    .font-poppins {
+      font-family: 'Poppins', 'Noto Sans Gujarati', sans-serif;
+    }
+
+    /* Glass Navigation */
+    .glass-nav {
+      background: rgba(20, 14, 8, 0.8);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border-bottom: 1px solid rgba(212, 167, 69, 0.3);
+    }
+
+    /* Magnetic Buttons */
+    .magnetic-btn {
+      transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      will-change: transform;
+      cursor: pointer;
+    }
+
+    /* Smoke Animation for Hero */
+    .smoke-particle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 50%;
+      animation: smokeRise 4s infinite ease-out;
+      pointer-events: none;
+    }
+
+    @keyframes smokeRise {
+      0% {
+        transform: translateY(0) translateX(0) scale(1);
+        opacity: 0.8;
+      }
+      50% {
+        transform: translateY(-150px) translateX(30px) scale(3);
+        opacity: 0.4;
+      }
+      100% {
+        transform: translateY(-300px) translateX(-20px) scale(6);
+        opacity: 0;
+      }
+    }
+
+    .smoke-particle:nth-child(odd) {
+      animation-duration: 5s;
+      animation-delay: 0.5s;
+    }
+    .smoke-particle:nth-child(even) {
+      animation-duration: 4.5s;
+      animation-delay: 1s;
+    }
+    .smoke-particle:nth-child(3n) {
+      animation-duration: 5.5s;
+      animation-delay: 0.3s;
+    }
+
+    /* Steam from tea cup */
+    .tea-steam {
+      position: absolute;
+      animation: steamFloat 2s infinite ease-out;
+      opacity: 0;
+    }
+    @keyframes steamFloat {
+      0% {
+        transform: translateY(0) scale(0.5);
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(-40px) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    /* Ken Burns Slider */
+    .ken-slide {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      animation: kenBurns 10s infinite alternate ease-in-out;
+    }
+    @keyframes kenBurns {
+      0% {
+        transform: scale(1);
+      }
+      100% {
+        transform: scale(1.15);
+      }
+    }
+
+    /* 3D Product Cards */
+    .card-3d {
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      transform-style: preserve-3d;
+      perspective: 1200px;
+    }
+    .card-3d:hover {
+      transform: rotateY(5deg) rotateX(5deg) translateY(-15px) scale(1.03);
+      box-shadow: 0 40px 60px -20px rgba(0, 0, 0, 0.4), 0 0 40px rgba(212, 167, 69, 0.3);
+    }
+
+    /* Glowing Border */
+    .glow-border {
+      box-shadow: 0 0 30px rgba(212, 167, 69, 0.4), 0 0 60px rgba(212, 167, 69, 0.2);
+    }
+
+    /* Floating Animation */
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-15px);
+      }
+    }
+    .floating {
+      animation: float 4s ease-in-out infinite;
+    }
+
+    /* Pulse */
+    @keyframes pulse-glow {
+      0%, 100% {
+        box-shadow: 0 0 0 0 rgba(212, 167, 69, 0.6);
+      }
+      50% {
+        box-shadow: 0 0 0 25px rgba(212, 167, 69, 0);
+      }
+    }
+    .pulse-glow {
+      animation: pulse-glow 2.5s infinite;
+    }
+
+    /* Shimmer */
+    @keyframes shimmer {
+      0% {
+        background-position: -200% 0;
+      }
+      100% {
+        background-position: 200% 0;
+      }
+    }
+    .shimmer-text {
+      background: linear-gradient(90deg, #d4a745, #f0d78c, #d4a745, #f0d78c);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 3s linear infinite;
+    }
+
+    /* Preloader */
+    .preloader-hidden {
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.6s ease;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #1a1410;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--gold);
+      border-radius: 10px;
+    }
+
+    /* Map */
+    .map-frame {
+      filter: sepia(20%) contrast(1.1) brightness(0.95);
+    }
+
+    @media (max-width: 768px) {
+      .ken-slide {
+        animation: kenBurns 8s infinite alternate ease-in-out;
+      }
+    }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- ========== PREMIUM PRELOADER ========== -->
+  <div id="preloader" class="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-[#1a1410] transition-all duration-700">
+    <!-- Animated Tea Cup -->
+    <div class="relative mb-8">
+      <svg width="120" height="120" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Cup Body -->
+        <path d="M20 58 L20 40 C20 28 30 18 50 18 C70 18 80 28 80 40 L80 58" stroke="#d4a745" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <!-- Handle -->
+        <path d="M78 44 L90 44 C95 44 96 50 92 54 C88 58 82 56 80 54" stroke="#d4a745" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <!-- Saucer -->
+        <ellipse cx="50" cy="68" rx="35" ry="6" stroke="#d4a745" stroke-width="2" fill="none"/>
+        <!-- Tea inside -->
+        <path d="M28 52 L32 44 L40 48 L48 40 L55 46 L62 42 L68 48" stroke="#f0d78c" stroke-width="2" fill="none" opacity="0.8"/>
+      </svg>
+      <!-- Steam wisps -->
+      <div class="tea-steam absolute top-0 left-12 text-2xl" style="animation-delay:0s;">💨</div>
+      <div class="tea-steam absolute top-1 left-10 text-xl" style="animation-delay:0.6s;">💨</div>
+      <div class="tea-steam absolute top-2 left-14 text-lg" style="animation-delay:1.2s;">💨</div>
+    </div>
+
+    <p class="text-amber-400 text-2xl font-display font-bold mb-4 tracking-wider">ચા બની રહી છે...</p>
+    <p class="text-amber-300/60 text-sm mb-6 tracking-[.3em] uppercase">Please Wait</p>
+
+    <!-- Progress Bar -->
+    <div class="w-72 h-1.5 bg-white/10 rounded-full overflow-hidden">
+      <div id="progressBar" class="h-full bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 w-0 transition-all duration-100 rounded-full"></div>
+    </div>
+    <p id="progressText" class="text-amber-200/60 text-xs mt-3 font-mono">0%</p>
+  </div>
+
+  <!-- ========== MAIN WEBSITE CONTENT ========== -->
+  <div id="mainWebsite" class="opacity-0 transition-all duration-800">
+
+    <!-- ===== STICKY GLASS NAVBAR ===== -->
+    <nav class="glass-nav fixed top-0 left-0 w-full z-[1000] px-5 md:px-12 py-4 flex items-center justify-between text-white/95">
+      <div class="flex items-center gap-3">
+        <span class="text-4xl floating">☕ </span>
+        <div>
+          <span class="font-display text-2xl md:text-3xl font-bold tracking-wide text-amber-100">પિયા</span>
+          <span class="text-amber-400 font-display text-2xl md:text-3xl font-bold">.</span>
+          <p class="text-[10px] text-amber-300/60 tracking-[.2em] uppercase -mt-1">Tea Stall</p>
+        </div>
+      </div>
+      <div class="hidden lg:flex gap-8 text-sm font-semibold tracking-wider uppercase">
+        <a href="#home" class="hover:text-amber-400 transition-colors duration-300">હોમ</a>
+        <a href="#story" class="hover:text-amber-400 transition-colors duration-300">અમારી વાર્તા</a>
+        <a href="#products" class="hover:text-amber-400 transition-colors duration-300">ઉત્પાદનો</a>
+        <a href="#whyus" class="hover:text-amber-400 transition-colors duration-300">શા માટે પિયા?</a>
+        <a href="#game" class="hover:text-amber-400 transition-colors duration-300">ગેમ ઝોન</a>
+        <a href="#contact" class="hover:text-amber-400 transition-colors duration-300">સંપર્ક</a>
+      </div>
+      <div class="lg:hidden">
+        <button id="mobileMenuBtn" class="text-2xl text-amber-300"><i class="fas fa-bars"></i></button>
+      </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="fixed top-0 left-0 w-full h-screen bg-[#1a1410]/98 backdrop-blur-xl z-[999] hidden flex flex-col items-center justify-center gap-8 text-white text-2xl font-semibold">
+      <button id="closeMobileMenu" class="absolute top-6 right-6 text-4xl text-amber-400">&times;</button>
+      <a href="#home" class="hover:text-amber-400">હોમ</a>
+      <a href="#story" class="hover:text-amber-400">અમારી વાર્તા</a>
+      <a href="#products" class="hover:text-amber-400">ઉત્પાદનો</a>
+      <a href="#whyus" class="hover:text-amber-400">શા માટે પિયા?</a>
+      <a href="#game" class="hover:text-amber-400">ગેમ ઝોન</a>
+      <a href="#contact" class="hover:text-amber-400">સંપર્ક</a>
+    </div>
+
+    <!-- ===== HERO SECTION WITH SMOKE & KEN BURNS ===== -->
+    <section id="home" class="relative h-screen w-full overflow-hidden flex items-center justify-center">
+      <!-- Smoke Particles -->
+      <div class="absolute inset-0 z-20 pointer-events-none overflow-hidden">
+        <div class="smoke-particle" style="left:15%; bottom:5%;"></div>
+        <div class="smoke-particle" style="left:25%; bottom:8%;"></div>
+        <div class="smoke-particle" style="left:40%; bottom:3%;"></div>
+        <div class="smoke-particle" style="left:55%; bottom:6%;"></div>
+        <div class="smoke-particle" style="left:70%; bottom:4%;"></div>
+        <div class="smoke-particle" style="left:80%; bottom:7%;"></div>
+        <div class="smoke-particle" style="left:10%; bottom:10%;"></div>
+        <div class="smoke-particle" style="left:50%; bottom:2%;"></div>
+        <div class="smoke-particle" style="left:30%; bottom:12%;"></div>
+        <div class="smoke-particle" style="left:65%; bottom:9%;"></div>
+        <div class="smoke-particle" style="left:85%; bottom:5%;"></div>
+        <div class="smoke-particle" style="left:20%; bottom:15%;"></div>
+      </div>
+
+      <!-- Overlay -->
+      <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/35 to-black/60 z-10"></div>
+
+      <!-- Ken Burns Slides -->
+      <div class="ken-slide" style="background-image: url('https://images.unsplash.com/photo-1561336526-2914f0b4b345?q=80&w=2070&auto=format&fit=crop');"></div>
+      <div class="ken-slide" style="background-image: url('https://images.unsplash.com/photo-1544787219-7f47ccb76574?q=80&w=2070&auto=format&fit=crop'); animation-delay: 3.3s; opacity:0; animation: fadeSlideHero 10s infinite;"></div>
+      <div class="ken-slide" style="background-image: url('https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=2071&auto=format&fit=crop'); animation-delay: 6.6s; opacity:0; animation: fadeSlideHero 10s infinite;"></div>
+
+      <style>
+        @keyframes fadeSlideHero {
+          0%, 18% {
+            opacity: 1;
+          }
+          33%, 100% {
+            opacity: 1;
+          }
+        }
+      </style>
+
+      <!-- Hero Content -->
+      <div class="relative z-30 text-center text-white max-w-6xl px-6">
+        <div class="inline-block mb-4 bg-amber-500/20 backdrop-blur-md px-6 py-2 rounded-full border border-amber-400/40">
+          <span class="text-amber-200 text-sm tracking-widest uppercase font-semibold">✨ મોરબીનો સ્વાદ ✨</span>
+        </div>
+        <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-display font-bold drop-shadow-2xl leading-tight">
+          <span class="shimmer-text">પિયા</span><br>
+          <span class="text-white">ટી સ્ટોલ</span>
+        </h1>
+        <p class="mt-6 text-xl md:text-3xl font-light italic text-white/90 max-w-3xl mx-auto">
+          "અહીં ચા નથી મળતી, અહીં <span class="text-amber-300 font-semibold">અનુભવ</span> મળે છે"
+        </p>
+        <p class="mt-4 text-base md:text-xl text-amber-200/80 font-medium">
+          📍 લાતી પ્લોટ 3, ભવાની બેકરી પાછળ, મોરબી
+        </p>
+        <div class="mt-10 flex flex-wrap gap-5 justify-center">
+          <a href="#products" class="magnetic-btn inline-flex items-center gap-3 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-black px-10 py-5 rounded-full font-bold text-lg shadow-2xl transition-all pulse-glow">
+            <i class="fas fa-shopping-cart"></i> તરત ઓર્ડર કરો
+          </a>
+          <a href="tel:+918780655919" class="magnetic-btn inline-flex items-center gap-3 border-2 border-white/50 hover:border-amber-400 text-white px-10 py-5 rounded-full font-semibold text-lg hover:bg-white/10 transition-all">
+            <i class="fas fa-phone-alt"></i> 87806 55919
+          </a>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 animate-bounce">
+          <i class="fas fa-chevron-down text-amber-300 text-3xl"></i>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== OUR STORY SECTION ===== -->
+    <section id="story" class="py-24 px-5 bg-[#fdf8f0] relative overflow-hidden">
+      <!-- Decorative elements -->
+      <div class="absolute top-10 left-10 text-8xl opacity-5 floating">🍵</div>
+      <div class="absolute bottom-10 right-10 text-8xl opacity-5 floating" style="animation-delay: 1s;">☕</div>
+
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+          <span class="text-amber-600 text-sm tracking-[.3em] uppercase font-semibold">અમારી સફર</span>
+          <h2 class="text-4xl md:text-6xl font-display font-bold text-[#3e2c1c] mt-3">અમારી <span class="text-amber-600">વાર્તા</span></h2>
+          <div class="w-24 h-1 bg-amber-500 mx-auto mt-4 rounded-full"></div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <!-- Story Content -->
+          <div class="space-y-6 order-2 md:order-1">
+            <div class="bg-white/70 backdrop-blur-sm rounded-3xl p-8 shadow-xl border border-amber-200/50">
+              <h3 class="text-2xl font-display font-bold text-amber-700 mb-4">☕ પિયાની શરૂઆત</h3>
+              <p class="text-gray-700 leading-relaxed text-lg">
+                મોરબીના લાતી પ્લોટ વિસ્તારમાં, ભવાની બેકરીની પાછળ, એક નાનકડી ચાની દુકાનથી શરૂઆત થઈ. આજે <strong class="text-amber-700">આરિફ ભાઈ સંધી</strong> ના નેતૃત્વમાં, પિયા ટી સ્ટોલ મોરબીના સૌથી પ્રિય ચાના સ્થળ તરીકે ઊભર્યું છે.
+              </p>
+            </div>
+            <div class="bg-white/70 backdrop-blur-sm rounded-3xl p-8 shadow-xl border border-amber-200/50">
+              <h3 class="text-2xl font-display font-bold text-amber-700 mb-4">💛 અમારું વચન</h3>
+              <p class="text-gray-700 leading-relaxed text-lg">
+                દરેક કપમાં <strong class="text-amber-700">શુદ્ધતા, સ્વાદ અને પ્રેમ</strong> — આ જ અમારી ઓળખ છે. અમે ફક્ત ચા નથી પીરસતા, અમે સંબંધો બાંધીએ છીએ.
+              </p>
+            </div>
+          </div>
+
+          <!-- Story Image -->
+          <div class="order-1 md:order-2">
+            <div class="relative">
+              <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=2047&auto=format&fit=crop" alt="પિયા ટી સ્ટોલ" class="w-full h-[400px] md:h-[500px] object-cover rounded-3xl shadow-2xl" onerror="this.src='https://placehold.co/600x400/d4a745/ffffff?text=પિયા+ટી+સ્ટોલ'">
+              <div class="absolute -bottom-6 -left-6 bg-amber-500 text-white px-6 py-3 rounded-2xl shadow-xl">
+                <p class="text-sm font-semibold">સ્થાપના</p>
+                <p class="text-2xl font-bold">1985</p>
+              </div>
+              <div class="absolute -top-6 -right-6 bg-white px-6 py-3 rounded-2xl shadow-xl border-2 border-amber-300">
+                <p class="text-sm font-semibold text-gray-600">સંચાલક</p>
+                <p class="text-xl font-bold text-amber-700">આરિફ ભાઈ સંધી</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== WHY PIYA TEA STALL ===== -->
+    <section id="whyus" class="py-24 px-5 bg-[#1a1410] text-white relative overflow-hidden">
+      <!-- Background pattern -->
+      <div class="absolute inset-0 opacity-5">
+        <div class="absolute top-20 left-10 text-9xl">🍵</div>
+        <div class="absolute bottom-20 right-10 text-9xl">☕</div>
+        <div class="absolute top-1/2 left-1/2 text-9xl">🌿</div>
+      </div>
+
+      <div class="max-w-7xl mx-auto relative z-10">
+        <div class="text-center mb-16">
+          <span class="text-amber-400 text-sm tracking-[.3em] uppercase font-semibold">શા માટે પિયા?</span>
+          <h2 class="text-4xl md:text-6xl font-display font-bold text-amber-300 mt-3">શા માટે <span class="text-white">પિયા ટી સ્ટોલ?</span></h2>
+          <p class="text-gray-400 mt-4 text-lg">અમને ખાસ બનાવનાર કારણો</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Feature 1 -->
+          <div class="bg-white/5 backdrop-blur-sm rounded-3xl p-8 text-center border border-amber-500/20 hover:border-amber-400/50 transition-all hover:scale-105 duration-300">
+            <span class="text-6xl block mb-4">🧑‍🍳</span>
+            <h3 class="text-xl font-bold text-amber-300 mb-3">અનુભવી હાથ</h3>
+            <p class="text-gray-300 text-sm">આરિફ ભાઈના હાથની ચા — સ્વાદ જ અલગ!</p>
+          </div>
+          <!-- Feature 2 -->
+          <div class="bg-white/5 backdrop-blur-sm rounded-3xl p-8 text-center border border-amber-500/20 hover:border-amber-400/50 transition-all hover:scale-105 duration-300">
+            <span class="text-6xl block mb-4">🌿</span>
+            <h3 class="text-xl font-bold text-amber-300 mb-3">શુદ્ધ સામગ્રી</h3>
+            <p class="text-gray-300 text-sm">શ્રેષ્ઠ ચા પત્તી, તાજા મસાલા અને શુદ્ધ દૂધ</p>
+          </div>
+          <!-- Feature 3 -->
+          <div class="bg-white/5 backdrop-blur-sm rounded-3xl p-8 text-center border border-amber-500/20 hover:border-amber-400/50 transition-all hover:scale-105 duration-300">
+            <span class="text-6xl block mb-4">💬</span>
+            <h3 class="text-xl font-bold text-amber-300 mb-3">મૈત્રીપૂર્ણ વાતાવરણ</h3>
+            <p class="text-gray-300 text-sm">ચા સાથે ગપ્પાં — મોરબીનો અડ્ડો</p>
+          </div>
+          <!-- Feature 4 -->
+          <div class="bg-white/5 backdrop-blur-sm rounded-3xl p-8 text-center border border-amber-500/20 hover:border-amber-400/50 transition-all hover:scale-105 duration-300">
+            <span class="text-6xl block mb-4">📍</span>
+            <h3 class="text-xl font-bold text-amber-300 mb-3">સુવિધાજનક સ્થાન</h3>
+            <p class="text-gray-300 text-sm">લાતી પ્લોટ, ભવાની બેકરી પાછળ — સરળતાથી પહોંચો</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PRODUCT SHOWCASE ===== -->
+    <section id="products" class="py-24 px-5 bg-[#fdf8f0]">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+          <span class="text-amber-600 text-sm tracking-[.3em] uppercase font-semibold">અમારું મેનુ</span>
+          <h2 class="text-4xl md:text-6xl font-display font-bold text-[#3e2c1c] mt-3">અમારા <span class="text-amber-600">ઉત્પાદનો</span></h2>
+          <p class="text-gray-500 mt-4 text-lg">દરેક વસ્તુ પ્રેમથી તૈયાર • ઓર્ડર કરવા ક્લિક કરો</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+          <!-- Product 1: ચા -->
+          <div class="card-3d bg-white rounded-3xl p-8 shadow-xl border border-amber-100 flex flex-col items-center text-center group">
+            <div class="relative mb-4">
+              <span class="text-7xl block group-hover:scale-110 transition-transform duration-300">☕ </span>
+              <div class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-3 py-1 rounded-full font-bold">BEST</div>
+            </div>
+            <h3 class="text-2xl font-display font-bold text-[#3e2c1c]">સ્પેશિયલ ચા</h3>
+            <p class="text-sm text-gray-500 mt-2">અદરક-મસાલો • ઇલાયચી • લેમન ટી</p>
+            <p class="text-amber-600 font-bold text-xl mt-3">₹10 થી શરૂ</p>
+            <button onclick="orderNow('સ્પેશિયલ ચા')" class="magnetic-btn mt-5 w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 text-white py-3.5 rounded-full font-semibold flex items-center justify-center gap-2 shadow-lg">
+              <i class="fab fa-whatsapp"></i> WhatsApp ઓર્ડર
+            </button>
+          </div>
+
+          <!-- Product 2: બિસ્કિટ -->
+          <div class="card-3d bg-white rounded-3xl p-8 shadow-xl border border-amber-100 flex flex-col items-center text-center group">
+            <span class="text-7xl block mb-4 group-hover:scale-110 transition-transform duration-300">🍪</span>
+            <h3 class="text-2xl font-display font-bold text-[#3e2c1c]">બિસ્કિટ</h3>
+            <p class="text-sm text-gray-500 mt-2">પાર્લે-જી • મોનાકો • ઓરિયો</p>
+            <p class="text-amber-600 font-bold text-xl mt-3">₹10 થી</p>
+            <button onclick="orderNow('બિસ્કિટ')" class="magnetic-btn mt-5 w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 text-white py-3.5 rounded-full font-semibold flex items-center justify-center gap-2 shadow-lg">
+              <i class="fab fa-whatsapp"></i> WhatsApp ઓર્ડર
+            </button>
+          </div>
+
+          <!-- Product 3: પાન -->
+          <div class="card-3d bg-white rounded-3xl p-8 shadow-xl border border-amber-100 flex flex-col items-center text-center group">
+            <span class="text-7xl block mb-4 group-hover:scale-110 transition-transform duration-300">🌿</span>
+            <h3 class="text-2xl font-display font-bold text-[#3e2c1c]">બનારસી પાન</h3>
+            <p class="text-sm text-gray-500 mt-2">મીઠો • સાદો • ખાસ મસાલો</p>
+            <p class="text-amber-600 font-bold text-xl mt-3">₹10 થી</p>
+            <button onclick="orderNow('બનારસી પાન')" class="magnetic-btn mt-5 w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 text-white py-3.5 rounded-full font-semibold flex items-center justify-center gap-2 shadow-lg">
+              <i class="fab fa-whatsapp"></i> WhatsApp ઓર્ડર
+            </button>
+          </div>
+
+          <!-- Product 4: સિગારેટ -->
+          <div class="card-3d bg-white rounded-3xl p-8 shadow-xl border border-amber-100 flex flex-col items-center text-center group">
+            <span class="text-7xl block mb-4 group-hover:scale-110 transition-transform duration-300">🚬</span>
+            <h3 class="text-2xl font-display font-bold text-[#3e2c1c]">સિગારેટ</h3>
+            <p class="text-sm text-gray-500 mt-2">ક્લાસિક • ગોલ્ડ ફ્લેક • ઇન્ડી કિંગ</p>
+            <p class="text-amber-600 font-bold text-xl mt-3">MRP પ્રમાણે</p>
+            <button onclick="orderNow('સિગારેટ')" class="magnetic-btn mt-5 w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 text-white py-3.5 rounded-full font-semibold flex items-center justify-center gap-2 shadow-lg">
+              <i class="fab fa-whatsapp"></i> WhatsApp ઓર્ડર
+            </button>
+          </div>
+
+          <!-- Product 5: માવા -->
+          <div class="card-3d bg-white rounded-3xl p-8 shadow-xl border border-amber-100 flex flex-col items-center text-center group">
+            <div class="relative mb-4">
+              <span class="text-7xl block group-hover:scale-110 transition-transform duration-300">☀️</span>
+              <div class="absolute -top-2 -right-2 bg-amber-500 text-white text-xs px-3 py-1 rounded-full font-bold">NEW</div>
+            </div>
+            <h3 class="text-2xl font-display font-bold text-[#3e2c1c]">ફ્રેશ માવા</h3>
+            <p class="text-sm text-gray-500 mt-2">પ્રીમિયમ ક્વોલિટી • તાજો</p>
+            <p class="text-amber-600 font-bold text-xl mt-3">₹15 થી</p>
+            <button onclick="orderNow('માવા')" class="magnetic-btn mt-5 w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 text-white py-3.5 rounded-full font-semibold flex items-center justify-center gap-2 shadow-lg">
+              <i class="fab fa-whatsapp"></i> WhatsApp ઓર્ડર
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== UNIQUE TEA CALCULATOR ===== -->
+    <section class="py-20 px-5 bg-gradient-to-br from-amber-50 to-orange-50">
+      <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-3xl p-8 md:p-12 shadow-2xl border border-amber-200 text-center">
+          <span class="text-7xl block mb-4 floating">🧮</span>
+          <h2 class="text-3xl md:text-5xl font-display font-bold text-[#3e2c1c] mb-4">ચા કેલ્ક્યુલેટર</h2>
+          <p class="text-gray-600 text-lg mb-8">તમારા મૂડ અને લોકોની સંખ્યા પ્રમાણે કેટલી ચા જોઈએ?</p>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5 text-left max-w-2xl mx-auto">
+            <div>
+              <label class="block text-sm font-bold text-gray-700 mb-2">👥 લોકોની સંખ્યા</label>
+              <input id="peopleInput" type="number" value="2" min="1" max="20" class="w-full p-4 border-2 border-gray-200 rounded-2xl focus:border-amber-500 outline-none text-lg">
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-gray-700 mb-2">🌤️ મૂડ</label>
+              <select id="moodInput" class="w-full p-4 border-2 border-gray-200 rounded-2xl focus:border-amber-500 outline-none text-lg">
+                <option value="1">હળવો</option>
+                <option value="2">સામાન્ય</option>
+                <option value="3">જોરદાર</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-bold text-gray-700 mb-2">🍵 ચાનો પ્રકાર</label>
+              <select id="teaType" class="w-full p-4 border-2 border-gray-200 rounded-2xl focus:border-amber-500 outline-none text-lg">
+                <option value="1">સ્પેશિયલ</option>
+              </select>
+            </div>
+          </div>
+
+          <button id="calculateTea" class="magnetic-btn mt-8 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white px-10 py-4 rounded-full font-bold text-xl shadow-xl">
+            <i class="fas fa-calculator mr-2"></i> ગણતરી કરો
+          </button>
+
+          <div id="teaResult" class="mt-8 p-6 bg-amber-50 rounded-2xl border border-amber-200 hidden">
+            <p class="text-2xl font-display font-bold text-amber-800" id="resultText"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== GAME ZONE ===== -->
+    <section id="game" class="py-24 px-4 bg-[#1a1410] text-white relative overflow-hidden">
+      <div class="absolute inset-0 opacity-5">
+        <div class="absolute top-10 left-10 text-9xl">🎮</div>
+        <div class="absolute bottom-10 right-10 text-9xl">🕹️</div>
+      </div>
+      <div class="max-w-6xl mx-auto text-center relative z-10">
+        <h2 class="text-4xl md:text-6xl font-display font-bold text-amber-300 mb-4">ગેમ ઝોન</h2>
+        <p class="text-xl text-amber-100/80 mb-4">"ચા બની રહી છે, ત્યાં સુધી ગેમ રમો!"</p>
+        <a href="https://amrutam-water.netlify.app/rs.html" target="_blank" class="inline-flex items-center gap-2 bg-amber-500 text-black px-6 py-3 rounded-full font-semibold mb-8 hover:bg-amber-400 transition">
+          <i class="fas fa-external-link-alt"></i> નવી ટેબમાં ગેમ ખોલો
+        </a>
+        <div class="glow-border rounded-3xl overflow-hidden border-2 border-amber-500/50">
+          <iframe src="https://amrutam-water.netlify.app/rs.html" class="w-full h-[550px] md:h-[650px]" style="border:0;" title="ગેમ"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CONTACT & MAP ===== -->
+    <section id="contact" class="py-24 px-5 bg-[#fdf8f0]">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl md:text-6xl font-display font-bold text-[#3e2c1c]">અમારો <span class="text-amber-600">સંપર્ક</span></h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-10 items-center">
+          <!-- Contact Info -->
+          <div class="space-y-6">
+            <div class="bg-white rounded-3xl p-8 shadow-xl border border-amber-200">
+              <h3 class="text-2xl font-display font-bold text-amber-700 mb-4">📞 સીધો સંપર્ક</h3>
+              <p class="text-lg flex items-center gap-3 mb-3"><i class="fas fa-user text-amber-600 w-6"></i> <strong>આરિફ ભાઈ સંધી</strong></p>
+              <p class="text-lg flex items-center gap-3 mb-3"><i class="fas fa-phone-alt text-green-600 w-6"></i> <a href="tel:8780655919" class="hover:text-amber-700 font-semibold">87806 55919</a></p>
+              <p class="text-lg flex items-center gap-3"><i class="fas fa-map-marker-alt text-red-500 w-6"></i> લાતી પ્લોટ 3, ભવાની બેકરી પાછળ, મોરબી</p>
+            </div>
+            <a href="https://wa.me/918780655919?text=નમસ્તે%20આરિફ ભાઈ%2C%20પિયા%20ટી%20સ્ટોલ%20વિશે%20જાણવું%20છે" target="_blank" class="magnetic-btn w-full bg-green-600 hover:bg-green-500 text-white py-5 rounded-full font-bold text-xl flex items-center justify-center gap-3 shadow-xl">
+              <i class="fab fa-whatsapp text-2xl"></i> WhatsApp પર વાત કરો
+            </a>
+          </div>
+
+          <!-- Map -->
+          <div class="rounded-3xl overflow-hidden shadow-2xl h-[400px] border-2 border-amber-300">
+            <iframe src="https://maps.google.com/maps?q=Lati%20plot%203%20Behind%20Bhavani%20Bakery%20Morbi&t=&z=16&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" class="map-frame" title="પિયા ટી સ્ટોલ લોકેશન"></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PREMIUM FOOTER ===== -->
+    <footer class="bg-[#1a1410] text-white py-16 px-6">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+          <div>
+            <h4 class="text-amber-400 text-2xl font-display font-bold mb-4">પિયા ટી સ્ટોલ</h4>
+            <p class="text-gray-400">મોરબીનો સ્વાદ, હવે પ્રીમિયમ અનુભવ સાથે.</p>
+            <div class="flex gap-3 mt-4">
+              <a href="#" class="text-amber-400 hover:text-amber-300 text-xl"><i class="fab fa-facebook"></i></a>
+              <a href="#" class="text-amber-400 hover:text-amber-300 text-xl"><i class="fab fa-instagram"></i></a>
+              <a href="https://wa.me/918780655919" class="text-amber-400 hover:text-amber-300 text-xl"><i class="fab fa-whatsapp"></i></a>
+            </div>
+          </div>
+          <div>
+            <h4 class="text-white font-bold text-lg mb-4">ઝડપી લિંક્સ</h4>
+            <ul class="space-y-2 text-gray-400">
+              <li><a href="#home" class="hover:text-amber-400">હોમ</a></li>
+              <li><a href="#story" class="hover:text-amber-400">અમારી વાર્તા</a></li>
+              <li><a href="#products" class="hover:text-amber-400">ઉત્પાદનો</a></li>
+              <li><a href="#game" class="hover:text-amber-400">ગેમ ઝોન</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-white font-bold text-lg mb-4">કાનૂની</h4>
+            <ul class="space-y-2 text-gray-400">
+              <li><a href="https://rehan-sandhi.blogspot.com/2026/02/my-license.html" target="_blank" class="hover:text-amber-400">વેબસાઇટ લાઇસન્સ</a></li>
+              <li><a href="#" class="hover:text-amber-400">ગોપનીયતા નીતિ</a></li>
+            </ul>
+          </div>
+          <div>
+            <a href="https://rehansandhi.netlify.app" target="_blank" class="text-amber-400 hover:underline">RS Digital Ecosystem</a>
+            <p class="text-gray-500 text-xs mt-4">© 2026 પિયા ટી સ્ટોલ. સર્વાધિકાર સુરક્ષિત.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/918780655919?text=નમસ્તે%20આરિફ ભાઈ" target="_blank" class="fixed bottom-8 right-8 z-[998] bg-green-500 hover:bg-green-400 text-white w-16 h-16 rounded-full flex items-center justify-center text-3xl shadow-2xl pulse-glow transition-all">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+
+  </div>
+
+  <script>
+    // ========== PRELOADER ==========
+    const preloader = document.getElementById('preloader');
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    const mainWebsite = document.getElementById('mainWebsite');
+
+    let progress = 0;
+    const loadInterval = setInterval(() => {
+      progress += Math.floor(Math.random() * 15) + 5;
+      if (progress >= 100) {
+        progress = 100;
+        clearInterval(loadInterval);
+        setTimeout(() => {
+          preloader.classList.add('preloader-hidden');
+          mainWebsite.style.opacity = '1';
+          document.body.style.overflow = 'auto';
+          initGSAP();
+        }, 300);
+      }
+      progressBar.style.width = progress + '%';
+      progressText.textContent = progress + '%';
+    }, 120);
+
+    document.body.style.overflow = 'hidden';
+
+    // ========== WHATSAPP ORDER ==========
+    function orderNow(product) {
+      const phone = '918780655919';
+      const msg = `આરિફ ભાઈ, મારે ઓર્ડર કરવો છે: ${product} (પિયા ટી સ્ટોલ વેબસાઇટ પરથી)`;
+      window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    // ========== MOBILE MENU ==========
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const closeMobileMenu = document.getElementById('closeMobileMenu');
+
+    mobileMenuBtn?.addEventListener('click', () => {
+      mobileMenu.classList.remove('hidden');
+    });
+    closeMobileMenu?.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+    });
+    mobileMenu?.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+
+    // ========== TEA CALCULATOR ==========
+    document.getElementById('calculateTea')?.addEventListener('click', () => {
+      const people = parseInt(document.getElementById('peopleInput').value) || 2;
+      const mood = parseFloat(document.getElementById('moodInput').value);
+      const teaFactor = parseFloat(document.getElementById('teaType').value);
+      const total = Math.ceil(people * mood * teaFactor);
+      const resultDiv = document.getElementById('teaResult');
+      const resultText = document.getElementById('resultText');
+      resultDiv.classList.remove('hidden');
+      resultText.innerHTML = `☕ <strong>${people} લોકો</strong> માટે આજે <strong>${total} કપ</strong> ચાની જરૂર પડશે!<br>પિયા ટી સ્ટોલ પર આવો, ચા પીઓ! 🍵`;
+    });
+
+    // ========== GSAP ANIMATIONS ==========
+    function initGSAP() {
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Magnetic buttons
+      document.querySelectorAll('.magnetic-btn').forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+          const rect = btn.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          gsap.to(btn, {
+            x: x * 0.3,
+            y: y * 0.3,
+            duration: 0.4,
+            ease: "power2.out"
+          });
+        });
+        btn.addEventListener('mouseleave', () => {
+          gsap.to(btn, {
+            x: 0,
+            y: 0,
+            duration: 0.6,
+            ease: "elastic.out(1, 0.4)"
+          });
+        });
+      });
+
+      // Fade in sections
+      gsap.utils.toArray('section').forEach((section, i) => {
+        gsap.from(section, {
+          scrollTrigger: {
+            trigger: section,
+            start: "top 85%",
+            toggleActions: "play none none none"
+          },
+          opacity: 0,
+          y: 50,
+          duration: 1,
+          delay: i * 0.1,
+          ease: "power3.out"
+        });
+      });
+
+      // Product cards stagger
+      gsap.from('.card-3d', {
+        scrollTrigger: {
+          trigger: '#products',
+          start: "top 80%"
+        },
+        opacity: 1,
+        y: 80,
+        rotationX: -15,
+        stagger: 0.1,
+        duration: 0.8,
+        ease: "back.out(1.7)"
+      });
+
+      // Story section animation
+      gsap.from('#story .bg-white\\/70', {
+        scrollTrigger: {
+          trigger: '#story',
+          start: "top 75%"
+        },
+        opacity: 0,
+        x: -60,
+        stagger: 0.2,
+        duration: 0.8,
+        ease: "power3.out"
+      });
+
+      // Smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          if (href === "#") return;
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+    }
+
+    // Initialize on load
+    window.addEventListener('load', () => {
+      // Extra safety for animations
+    });
+  </script>
+</body>
+      </html>
